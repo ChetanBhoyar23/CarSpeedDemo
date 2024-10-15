@@ -12,7 +12,7 @@ import com.carrental.carspeeddemo.R
 import com.carrental.carspeeddemo.MainCarActivity
 
 /**
- * This is notification util class
+ * This is notification util class.
  */
 internal object NotificationsUtil {
 

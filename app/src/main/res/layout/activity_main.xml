@@ -5,17 +5,19 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainCarActivity">
+    tools:context=".MainCarActivity"
+    android:background="@color/white">
 
     <TextView
-        android:textColor="#FFFFFF"
         android:id="@+id/speedTextView"
         android:layout_width="0dp"
         android:gravity="center"
         android:layout_height="0dp"
+        android:textColor="@color/purple_700"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="Dummy Text"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

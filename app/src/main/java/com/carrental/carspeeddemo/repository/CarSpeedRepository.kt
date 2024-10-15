@@ -5,18 +5,10 @@ import com.carrental.carspeeddemo.model.DefaultSpeedLimit
 import com.carrental.carspeeddemo.model.SpeedLimit
 import com.carrental.carspeeddemo.utils.ApplicationDataHandler
 import com.carrental.carspeeddemo.utils.Constants
-import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-open class CarSpeedRepository @Inject constructor() : ISpeedRepository {
-
-    @Inject
-    lateinit var applicationDataHandler: ApplicationDataHandler
-
-    @Inject
-    lateinit var notificationManager: NotificationManager
-
+open class CarSpeedRepository(val applicationDataHandler: ApplicationDataHandler, val notificationManager: NotificationManager) : ISpeedRepository {
 
     // Send a notification for over speed car.
     fun sendNotificationToCompany(title: String, message: String, carId: String) {

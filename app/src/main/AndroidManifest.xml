@@ -10,8 +10,8 @@
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE_LOCATION"/>
 
+
     <application
-        android:name=".MyApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -33,7 +33,14 @@
             </intent-filter>
         </activity>
 
-        <service android:name="com.carrental.carspeeddemo.model.LocationService"
+        <receiver
+            android:name=".receiver.SpeedReceiver"
+            android:enabled="true"
+            android:exported="true"
+            tools:ignore="Instantiatable">
+        </receiver>
+
+        <service android:name=".model.LocationService"
             android:foregroundServiceType="location"
             tools:ignore="ForegroundServicePermission" />
     </application>

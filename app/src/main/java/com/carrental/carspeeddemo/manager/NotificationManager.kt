@@ -1,13 +1,9 @@
 package com.carrental.carspeeddemo.manager
 
-import javax.inject.Inject
-import javax.inject.Singleton
-
 /**
  * This is notification manager, manage to send notification.
  */
-@Singleton
-class NotificationManager @Inject constructor() {
+class NotificationManager {
 
     private var notificationManager: INotificationManager? = null
 
