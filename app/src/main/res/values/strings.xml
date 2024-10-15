@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">CarSpeedDemo</string>
+    <string name="speed_alert_title">Speed Alert</string>
+    <string name="speed_alert_message">Please manage the speed limit</string>
 </resources>
