@@ -52,17 +52,6 @@ class MainCarActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        // (application as MyApplication).applicationComponent.inject(this)
-
-        findViewById<TextView>(R.id.speedTextView).visibility = View.VISIBLE
-        findViewById<TextView>(R.id.speedTextView).setOnClickListener(View.OnClickListener {
-               val intent: Intent = Intent(ACTION_ID)
-               intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
-               sendBroadcast(intent)
-               Log.d(Constant.TAG, "Speed change broadcast sent.")
-        })
-
         // Initialise notification firebase manager.
         notificationManager.initFirebaseManager()
         initialDataSetup()
