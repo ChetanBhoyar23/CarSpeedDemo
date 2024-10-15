@@ -10,7 +10,7 @@ class ApplicationDataHandler {
     // Speed data
     private var speedDataHashMap : HashMap<String, Int> = HashMap<String, Int> ()
 
-    fun setCarData(key: PreferenceType, value: String){
+    fun setCarData(key: RentalCarType, value: String){
         carDataHashMap.put(key.toString(), value)
     }
 

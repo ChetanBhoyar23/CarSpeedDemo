@@ -11,7 +11,7 @@ import com.carrental.carspeeddemo.model.LocationService
 import com.carrental.carspeeddemo.utils.ApplicationDataHandler
 import com.carrental.carspeeddemo.utils.Constants
 import com.carrental.carspeeddemo.utils.NotificationsUtil
-import com.carrental.carspeeddemo.utils.PreferenceType
+import com.carrental.carspeeddemo.utils.RentalCarType
 import com.carrental.carspeeddemo.viewmodel.SpeedViewModel
 import javax.inject.Inject
 
@@ -44,8 +44,8 @@ class MainCarActivity : AppCompatActivity() {
 
 
         // Set car id and fleet id/ group id.
-        applicationDataHandler.setCarData(PreferenceType.CAR_ID, Constants.CAR_ID)
-        applicationDataHandler.setCarData(PreferenceType.FLEET_ID, Constants.FLEET_ID)
+        applicationDataHandler.setCarData(RentalCarType.CAR_ID, Constants.CAR_ID)
+        applicationDataHandler.setCarData(RentalCarType.FLEET_ID, Constants.FLEET_ID)
 
         // Initialise notification firebase manager.
         notificationManager.initFirebaseManager()

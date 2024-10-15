@@ -7,7 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.carrental.carspeeddemo.model.SpeedLimit
 import com.carrental.carspeeddemo.repository.CarSpeedRepository
 import com.carrental.carspeeddemo.utils.ApplicationDataHandler
-import com.carrental.carspeeddemo.utils.PreferenceType
+import com.carrental.carspeeddemo.utils.RentalCarType
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -33,7 +33,7 @@ class SpeedViewModel @Inject constructor(private val repository: CarSpeedReposit
         Log.d(TAG,"Speed Limit: $maxSpeed , Car Speed:$currentSpeed")
         if (currentSpeed > maxSpeed) {
             speedLimitExceededLiveData.postValue(true)
-            val carId:String = applicationDataHandler.getCarData(PreferenceType.CAR_ID.name)
+            val carId:String = applicationDataHandler.getCarData(RentalCarType.CAR_ID.name)
 
             // Sending notification
             repository.sendNotificationToCompany(
