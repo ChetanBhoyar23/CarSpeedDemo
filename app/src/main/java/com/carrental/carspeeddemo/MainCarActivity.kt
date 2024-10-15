@@ -49,7 +49,9 @@ class MainCarActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // Initialise notification firebase manager by passing true.
+        // Initialise notification firebase manager or AWS manger by passing true/false.
+        // This will determine by which service is live now.
+        // Assumption: Firebase notification is ON now.
         notificationManager.initNotificationManager(true)
         initViews()
         initialDataSetup()
@@ -63,10 +65,9 @@ class MainCarActivity : AppCompatActivity() {
     private fun initialDataSetup() {
         // Set car id and fleet id/ group id.
         applicationDataHandler.setCarData(RentalCarType.CAR_ID, Constants.CAR_ID)
-        applicationDataHandler.setCarData(RentalCarType.FLEET_ID, Constants.FLEET_ID)
 
         // Rental company should sets default speed limit for rental car group
-        mainCarViewModel.getDefaultSpeed(Constants.CAR_ID, Constants.FLEET_ID)
+        mainCarViewModel.getDefaultSpeed(Constants.CAR_ID)
 
         // Rental agent sets a specific speed limit for a car.
         mainCarViewModel.setMaxSpeedLimit(Constants.CAR_ID, Constants.MAX_SPEED)
@@ -110,15 +111,11 @@ class MainCarActivity : AppCompatActivity() {
         startService(serviceIntent)
     }
 
-    override fun onStop() {
-        // un-register receiver.
-        unregisterReceiver(speedReceiver)
-        super.onStop()
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "On Destroy")
+        // un-register receiver.
+        unregisterReceiver(speedReceiver)
         // Stop service.
         Intent(this, LocationService::class.java).also {
             stopService(it)

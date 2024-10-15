@@ -18,11 +18,9 @@ open class CarSpeedRepository(
     }
 
     // Get default speed for rental car group.
-    override suspend fun getDefaultSpeed(carId: String, fleetId: String): Int? {
+    override suspend fun getDefaultSpeed(carId: String): Int? {
         applicationDataHandler.setCarSpeed(carId, Constants.DEFAULT_MAX_SPEED)
-        return applicationDataHandler.getCarSpeed(carId).let {
-            it
-        }
+        return applicationDataHandler.getCarSpeed(carId)
     }
 
     //  Get speed limit for rental car group.

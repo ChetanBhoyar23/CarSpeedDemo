@@ -29,9 +29,9 @@ class MainCarViewModel(
     /**
      * Get default Speed for rental car group.
      */
-    fun getDefaultSpeed(carId: String, fleetId: String) {
+    fun getDefaultSpeed(carId: String) {
         viewModelScope.launch {
-            val defaultSpeedLimit = repository.getDefaultSpeed(carId, fleetId)
+            val defaultSpeedLimit = repository.getDefaultSpeed(carId)
             Log.d(TAG, "Default Speed: $defaultSpeedLimit")
         }
     }
