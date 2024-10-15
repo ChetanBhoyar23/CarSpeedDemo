@@ -9,7 +9,7 @@
     android:background="@color/white">
 
     <TextView
-        android:id="@+id/speedTextView"
+        android:id="@+id/currentSpeedTextView"
         android:layout_width="0dp"
         android:gravity="center"
         android:layout_height="0dp"

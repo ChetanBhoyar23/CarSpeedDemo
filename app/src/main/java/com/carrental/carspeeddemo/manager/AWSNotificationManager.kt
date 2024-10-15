@@ -2,7 +2,10 @@ package com.carrental.carspeeddemo.manager
 
 import android.util.Log
 
-class AWSNotificationManagerManager : INotificationManager {
+/**
+ * AWS notification manager.
+ */
+class AWSNotificationManager : INotificationManager {
 
     companion object {
         private const val TAG: String = "AWSNotificationManagerManager"

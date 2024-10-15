@@ -11,9 +11,10 @@ import com.carrental.carspeeddemo.utils.Constants.SPEED_DATA
  * Speed change receiver.
  */
 class SpeedReceiver(private val speedListener: ISpeedChangeListener) : BroadcastReceiver() {
+    private val defaultLimit = 10
     override fun onReceive(context: Context, intent: Intent) {
         Log.d("TAG", "Speed change broadcast received.")
-            val changeSpeed = intent.getIntExtra(SPEED_DATA, 10)
+            val changeSpeed = intent.getIntExtra(SPEED_DATA, defaultLimit)
             speedListener.onSpeedChange(changeSpeed)
         }
 }

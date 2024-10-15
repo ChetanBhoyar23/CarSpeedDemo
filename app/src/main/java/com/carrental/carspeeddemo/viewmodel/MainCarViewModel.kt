@@ -5,52 +5,63 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carrental.carspeeddemo.model.ISpeedChangeListener
-import com.carrental.carspeeddemo.model.SpeedLimit
 import com.carrental.carspeeddemo.repository.CarSpeedRepository
 import com.carrental.carspeeddemo.utils.ApplicationDataHandler
 import com.carrental.carspeeddemo.utils.RentalCarType
 import kotlinx.coroutines.launch
-import javax.inject.Singleton
 
-@Singleton
-class SpeedViewModel(private val repository: CarSpeedRepository, private val applicationDataHandler: ApplicationDataHandler) : ViewModel(), ISpeedChangeListener {
+/**
+ *  Activity View Model for MainCar activity.
+ */
+class MainCarViewModel(
+    private val repository: CarSpeedRepository,
+    private val applicationDataHandler: ApplicationDataHandler
+) : ViewModel(), ISpeedChangeListener {
 
     companion object {
         private const val TAG: String = "SpeedViewModel"
     }
 
-    private var speedLimit: SpeedLimit? = null
+    private var maxSpeedLimit: Int? = 0
     val speedLiveData = MutableLiveData<Int>()
     val speedLimitExceededLiveData = MutableLiveData<Boolean>()
-    val errorLiveData = MutableLiveData<String>()
 
-    fun getDefaultSpeedLimit(carId:String, fleetId: String) {
+    /**
+     * Get default Speed for rental car group.
+     */
+    fun getDefaultSpeed(carId: String, fleetId: String) {
         viewModelScope.launch {
-            val defaultSpeedLimit = repository.getDefaultSpeedLimit(carId, fleetId)
-            Log.d(TAG,"Default Speed: $defaultSpeedLimit")
+            val defaultSpeedLimit = repository.getDefaultSpeed(carId, fleetId)
+            Log.d(TAG, "Default Speed: $defaultSpeedLimit")
         }
     }
 
-    fun getSpeedLimitForCar(carId: String) {
+    /**
+     * Get max speed limit for Car.
+     */
+    fun getMaxSpeedLimit(carId: String) {
         viewModelScope.launch {
-            speedLimit = repository.getSpeedLimitForCar(carId)
-            Log.d(TAG,"Max Speed: $speedLimit")
+            maxSpeedLimit = repository.getSpeedLimitForCar(carId)
+            Log.d(TAG, "Max Speed: $maxSpeedLimit")
         }
     }
 
-    fun setSpeedLimitForCar(carId: String, maxSpeed: Int) {
+    /**
+     * Set max speed limit for car.
+     */
+    fun setMaxSpeedLimit(carId: String, maxSpeed: Int) {
         viewModelScope.launch {
-            repository.setSpeedLimitForCar(SpeedLimit(carId, maxSpeed))
+            repository.setSpeedLimitForCar(carId, maxSpeed)
         }
     }
 
     override fun onSpeedChange(currentSpeed: Int) {
-        val maxSpeed: Int = speedLimit?.maxSpeed ?: 0
+        val maxSpeed: Int = maxSpeedLimit ?: 0
         speedLiveData.postValue(currentSpeed)
-        Log.d(TAG,"Speed Limit: $maxSpeed , Car Speed:$currentSpeed")
+        Log.d(TAG, "Speed Limit: $maxSpeed , Car Speed:$currentSpeed")
         if (currentSpeed > maxSpeed) {
             speedLimitExceededLiveData.postValue(true)
-            val carId:String = applicationDataHandler.getCarData(RentalCarType.CAR_ID.name)
+            val carId: String = applicationDataHandler.getCarData(RentalCarType.CAR_ID.name)
 
             // Sending notification
             repository.sendNotificationToCompany(

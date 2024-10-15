@@ -1,43 +1,38 @@
 package com.carrental.carspeeddemo.repository
 
 import com.carrental.carspeeddemo.manager.NotificationManager
-import com.carrental.carspeeddemo.model.DefaultSpeedLimit
-import com.carrental.carspeeddemo.model.SpeedLimit
 import com.carrental.carspeeddemo.utils.ApplicationDataHandler
 import com.carrental.carspeeddemo.utils.Constants
-import javax.inject.Singleton
 
-@Singleton
-open class CarSpeedRepository(val applicationDataHandler: ApplicationDataHandler, val notificationManager: NotificationManager) : ISpeedRepository {
+/**
+ * Car repository class, responsible for managing data.
+ */
+open class CarSpeedRepository(
+    val applicationDataHandler: ApplicationDataHandler,
+    val notificationManager: NotificationManager
+) : ICarSpeedRepository {
 
     // Send a notification for over speed car.
     fun sendNotificationToCompany(title: String, message: String, carId: String) {
         notificationManager.sendNotification(title, message, carId)
     }
 
-// Get default speed for rental car group.
-    override suspend fun getDefaultSpeedLimit(carId: String, fleetId: String): DefaultSpeedLimit? {
+    // Get default speed for rental car group.
+    override suspend fun getDefaultSpeed(carId: String, fleetId: String): Int? {
         applicationDataHandler.setCarSpeed(carId, Constants.DEFAULT_MAX_SPEED)
-        return applicationDataHandler.getCarSpeed(carId)?.let {
-            DefaultSpeedLimit(
-                fleetId,
-                it
-            )
+        return applicationDataHandler.getCarSpeed(carId).let {
+            it
         }
     }
 
     //  Get speed limit for rental car group.
-    override suspend fun getSpeedLimitForCar(carId: String): SpeedLimit? {
+    override suspend fun getSpeedLimitForCar(carId: String): Int? {
         val maxSpeed = applicationDataHandler.getCarSpeed(carId)
-        return (if (maxSpeed == 0) applicationDataHandler.getCarSpeed(carId) else maxSpeed)?.let {
-            SpeedLimit(
-                carId,
-                it
-            )
-        }
+        return if (maxSpeed == 0) applicationDataHandler.getCarSpeed(carId) else maxSpeed
     }
 
-    override suspend fun setSpeedLimitForCar(speedLimit: SpeedLimit) {
-        applicationDataHandler.setCarSpeed(speedLimit.carId, speedLimit.maxSpeed)
+    // Sets Speed limit.
+    override suspend fun setSpeedLimitForCar(carId: String, maxSpeed: Int) {
+        applicationDataHandler.setCarSpeed(carId, maxSpeed)
     }
 }

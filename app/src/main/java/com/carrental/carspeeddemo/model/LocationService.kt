@@ -15,6 +15,7 @@ import androidx.core.app.ServiceCompat
 import com.carrental.carspeeddemo.model.LocationService.Constant.MIN_DISTANCE
 import com.carrental.carspeeddemo.model.LocationService.Constant.MIN_TIME
 import com.carrental.carspeeddemo.model.LocationService.Constant.TAG
+import com.carrental.carspeeddemo.utils.Constants
 import com.carrental.carspeeddemo.utils.Constants.SPEED_DATA
 import com.carrental.carspeeddemo.utils.NotificationsUtil
 
@@ -29,8 +30,6 @@ class LocationService: Service() {
         const val MIN_DISTANCE: Float = 1f
         const val MIN_TIME: Long = 1000
     }
-
-    var ACTION_ID: String = "com.alex.receivers.id1"
 
     private lateinit var locationManager: LocationManager
 
@@ -97,7 +96,7 @@ class LocationService: Service() {
             val speed: Double = location.speed.toDouble()
 
             // Send Speed change data over broad cast
-            val intent = Intent(ACTION_ID)
+            val intent = Intent(Constants.ACTION_ID)
             intent.putExtra(SPEED_DATA, speed)
             intent.addFlags(Intent.FLAG_INCLUDE_STOPPED_PACKAGES)
             sendBroadcast(intent)
