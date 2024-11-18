@@ -1,16 +1,11 @@
 package com.carrental.carspeeddemo
 
-import android.annotation.SuppressLint
-import android.content.Intent
-import android.content.IntentFilter
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.carrental.carspeeddemo.manager.NotificationManager
 import com.carrental.carspeeddemo.model.ISpeedChangeListener
-import com.carrental.carspeeddemo.model.LocationService
-import com.carrental.carspeeddemo.receiver.SpeedReceiver
 import com.carrental.carspeeddemo.repository.CarSpeedRepository
 import com.carrental.carspeeddemo.utils.ApplicationDataHandler
 import com.carrental.carspeeddemo.utils.Constants
@@ -37,8 +32,6 @@ class MainCarActivity : AppCompatActivity() {
 
     private var mainCarViewModel: MainCarViewModel =
         MainCarViewModel(carSpeedRepository, applicationDataHandler)
-
-    private var speedReceiver: SpeedReceiver? = null
 
     // Speed listener
     private val speedListener: ISpeedChangeListener = mainCarViewModel
@@ -100,33 +93,12 @@ class MainCarActivity : AppCompatActivity() {
 
     override fun onStart() {
         super.onStart()
-        registerReceiver()
-        // startLocationService()
         initCarPropertyManager()
-    }
-
-    @SuppressLint("UnspecifiedRegisterReceiverFlag")
-    private fun registerReceiver() {
-        // Register BroadcastReceiver
-        speedReceiver = SpeedReceiver(speedListener)
-        registerReceiver(speedReceiver, IntentFilter(Constants.ACTION_ID), RECEIVER_NOT_EXPORTED)
-    }
-
-    private fun startLocationService() {
-        // Start the Location Service.
-        val serviceIntent = Intent(this, LocationService::class.java)
-        startService(serviceIntent)
     }
 
     override fun onDestroy() {
         super.onDestroy()
         Log.d(TAG, "On Destroy")
-        // un-register receiver.
-        unregisterReceiver(speedReceiver)
-        // Stop service.
-        Intent(this, LocationService::class.java).also {
-            stopService(it)
-        }
     }
 
     private fun showAlert() {
