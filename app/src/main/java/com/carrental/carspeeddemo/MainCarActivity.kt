@@ -58,6 +58,12 @@ class MainCarActivity : AppCompatActivity() {
         initObservers()
     }
 
+    // Part 2
+    private fun initCarPropertyManager() {
+        mainCarViewModel.initCarPropertyManager(this)
+        mainCarViewModel.registerPropertyChangeCallBack()
+    }
+
     private fun initViews() {
         textView = findViewById<TextView>(R.id.currentSpeedTextView)
     }
@@ -95,7 +101,8 @@ class MainCarActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         registerReceiver()
-        startLocationService()
+        // startLocationService()
+        initCarPropertyManager()
     }
 
     @SuppressLint("UnspecifiedRegisterReceiverFlag")

@@ -1,10 +1,13 @@
 package com.carrental.carspeeddemo.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.carrental.carspeeddemo.model.ISpeedChangeListener
+import com.carrental.carspeeddemo.model.CarPropertyUseCase
+import com.carrental.carspeeddemo.model.CarPropertyUseCaseImp
 import com.carrental.carspeeddemo.repository.CarSpeedRepository
 import com.carrental.carspeeddemo.utils.ApplicationDataHandler
 import com.carrental.carspeeddemo.utils.RentalCarType
@@ -25,6 +28,7 @@ class MainCarViewModel(
     private var maxSpeedLimit: Int? = 0
     val speedLiveData = MutableLiveData<Int>()
     val speedLimitExceededLiveData = MutableLiveData<Boolean>()
+    private val carPropertyUseCase: CarPropertyUseCase = CarPropertyUseCaseImp()
 
     /**
      * Get default Speed for rental car group.
@@ -72,5 +76,14 @@ class MainCarViewModel(
         } else {
             speedLimitExceededLiveData.postValue(false)
         }
+    }
+
+    fun initCarPropertyManager(context: Context) {
+        carPropertyUseCase.initiateCarPropertyManager(context)
+    }
+
+    fun registerPropertyChangeCallBack() {
+        carPropertyUseCase.registerPropertyChangeCallBack()
+        carPropertyUseCase.startObservingCarSpeed(this)
     }
 }
